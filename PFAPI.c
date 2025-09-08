@@ -51,11 +51,11 @@ static inline void conversione_oddr_cubiche(int x, int y, int* q, int* r, int* s
 static inline int calcola_distanza_esagono(int xa, int ya, int xb, int yb);
 void assegna_vicini(Mappa* m);
 Mappa* crea_mappa(int num_colonne, int num_righe);
-void cancella_mappa(Mappa* map);
+static inline void cancella_mappa(Mappa* map);
 static inline int clampa(int v);
-static int trova_indice_rotta(const Esagono* partenza, int x2, int y2);
-static int costo_media_preesistenti(const Esagono* partenza);
-static int ha_archi_uscita_traversabili(const Esagono* e);
+static inline int trova_indice_rotta(const Esagono* partenza, int x2, int y2);
+static inline int costo_media_preesistenti(const Esagono* partenza);
+static inline int ha_archi_uscita_traversabili(const Esagono* e);
 int change_cost(Mappa* m, int x, int y, int v, int raggio);
 int toggle_air_route(Mappa* m, int x_partenza, int y_partenza, int x_destinazione, int y_destinazione);
 
@@ -210,7 +210,7 @@ Mappa* crea_mappa(int num_colonne, int num_righe) {
 }
 
 //fatto
-void cancella_mappa(Mappa* map) {
+static inline void cancella_mappa(Mappa* map) {
     if (!map) return;
     if (map->celle) {
         for (int i = 0; i < map->righe; ++i) {
@@ -230,7 +230,7 @@ static inline int clampa(int v) {
 }
 
 //fatto
-static int trova_indice_rotta(const Esagono* partenza, int x2, int y2) {
+static inline int trova_indice_rotta(const Esagono* partenza, int x2, int y2) {
     for (int i = 0; i < partenza->num_rotte; i++) {
         if (partenza->rotte_aeree[i].x_dest == x2 &&
             partenza->rotte_aeree[i].y_dest == y2) {
@@ -241,7 +241,7 @@ static int trova_indice_rotta(const Esagono* partenza, int x2, int y2) {
 }
 
 //fatto
-static int costo_media_preesistenti(const Esagono* partenza) {
+static inline int costo_media_preesistenti(const Esagono* partenza) {
     int somma = partenza->costo_uscita_terra;
     for (int i = 0; i < partenza->num_rotte; i++) {
         somma += partenza->rotte_aeree[i].costo;
@@ -251,7 +251,7 @@ static int costo_media_preesistenti(const Esagono* partenza) {
 }
 
 //fatto
-static int ha_archi_uscita_traversabili(const Esagono* e) {
+static inline int ha_archi_uscita_traversabili(const Esagono* e) {
     if (e->costo_uscita_terra > 0 && e->num_vicini > 0) return 1;
     for (int i = 0; i < e->num_rotte; ++i) {
         if (e->rotte_aeree[i].costo > 0) return 1;
@@ -346,13 +346,13 @@ int toggle_air_route(Mappa* m, int x_partenza, int y_partenza, int x_destinazion
 
 
 //heap vari per usare djksta
-static void crea_heap(MinHeap* mh, int cap) {
+static inline void crea_heap(MinHeap* mh, int cap) {
     mh->nodo = (NodoHeap*)malloc((size_t)cap * sizeof(NodoHeap));
     mh->size = 0;
     mh->cap = cap;
 }
 
-static void cancella_heap(MinHeap* mh) {
+static inline void cancella_heap(MinHeap* mh) {
     free(mh->nodo);
     mh->nodo = NULL;
     mh->size = mh->cap = 0;
@@ -385,7 +385,7 @@ static void aggiungi_nodo_heap(MinHeap* h, int id, int dist) {
     }
 }
 
-static int heap_vuoto(const MinHeap* h) { 
+static inline int heap_vuoto(const MinHeap* h) { 
     return h->size == 0; }  //1 se l'heap è vuoto 0 altrimenti
 
 static NodoHeap estrai_nodo_minimo(MinHeap* h) {
