@@ -1,4 +1,5 @@
-PROGETTO FINALE DI ALGORITMI E STRUTTURE DATI 2023-2024
+# ALGORITHMS AND DATA STRUCTURES FINAL PROJECT 2023–2024
 
+A **C program** that manages a hexagonal grid map and computes the minimum travel cost between two cells, combining **ground movements** and **air routes**.
 
-Programma in **C** che gestisce una mappa a griglia esagonale e calcola il costo minimo di viaggio tra due celle, combinando **spostamenti via terra** e **rotte aeree**. Il cammino minimo è calcolato con l'**algoritmo di Dijkstra** implementato con una **min-heap** scritta da zero.
+The shortest path is computed using **Dijkstra's algorithm**, implemented with a **custom min-heap built from scratch**.
